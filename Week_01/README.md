@@ -158,7 +158,7 @@
       public PriorityQueue(PriorityQueue<? extends E> c){
         this(Math.max(1, (int) (1.1 * c.size())),
              (Comparator<? super E>)c.comparator());
-        // We can just copy the contents.
+        // 我们可以只复制队列的值。
         System.arraycopy(c.storage, 0, storage, 0, c.storage.length);
       }
     
@@ -249,8 +249,7 @@
         return used;
       }
     
-      // It is more efficient to implement this locally -- less searching
-      // for free slots.
+      // 在本地实施此方法效率更高-减少对slot的搜索。
       public boolean addAll(Collection<? extends E> c){
         if (c == this)
           throw new IllegalArgumentException();
@@ -287,21 +286,20 @@
     
       void remove(int index)
       {
-        // Remove the element at INDEX.  We do this by finding the least
-        // child and moving it into place, then iterating until we reach
-        // the bottom of the tree.
+        // 在INDEX处删除该元素。 我们通过找到最小的子节点并将其移到适当的位置，
+        // 然后进行迭代直到到达树的底部来做到这一点。
         while (storage[index] != null){
             int child = 2 * index + 1;
     
-            // See if we went off the end.
+            // 判断是否结束
             if (child >= storage.length){
                 storage[index] = null;
                 break;
               }
     
-            // Find which child we want to promote.  If one is not null,
-            // we pick it.  If both are null, it doesn't matter, we're
-            // about to leave.  If neither is null, pick the lesser.
+            // 找到我们要处理的子节点。 如果一个不为null，则选择它。 
+            // 如果两者都为null，则没关系，我们将离开。 
+            // 如果两者都不为空，则选择较小的。
             if (child + 1 >= storage.length || storage[child + 1] == null){
                 // Nothing.
               }
@@ -316,17 +314,14 @@
       }
     
       void bubbleUp(int index){
-        // The element at INDEX was inserted into a blank spot.  Now move
-        // it up the tree to its natural resting place.
+        // NDEX处的元素已插入空白处。 现在，将其沿树移至其自然的安息处。
         while (index > 0) {
-            // This works regardless of whether we're at 2N+1 or 2N+2.
+            // 无论我们处于2N + 1还是2N + 2，这都有效。
             int parent = (index - 1) / 2;
             if (Collections.compare(storage[parent], storage[index], comparator)
                 <= 0) {
-                // Parent is the same or smaller than this element, so the
-                // invariant is preserved.  Note that if the new element
-                // is smaller than the parent, then it is necessarily
-                // smaller than the parent's other child.
+                // 父级等于或小于此元素，因此保留不变性。 
+                // 注意，如果新元素小于父元素，那么它必然小于父元素的另一个子元素。
                 break;
               }
     
