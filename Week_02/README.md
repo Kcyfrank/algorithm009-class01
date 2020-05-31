@@ -16,3 +16,8 @@
 
 直接调用putVal方法 默认 onlyIfAbsent 为false，evict 为true
 即当key存在重复时，强制替换成新的value，且不处于 "creation mode"
+
+若当前map未进行初始化，默认进行resize() DEFAULT_INITIAL_CAPACITY 为16(1<<4)。
+若当前hash值不在table表内，直接添加新的node 并更新map的大小。
+若当前hash值已存在，判断key是否匹配，处理hash碰撞的问题。
+由于onlyIfAbsent默认为false ，若原key值存在直接替换为新的val。
